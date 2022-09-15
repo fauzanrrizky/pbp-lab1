@@ -28,6 +28,6 @@ def request_json(request):
 # Mengembalikan Data Berdasarkan ID dalam Bentuk JSON/XML
 
 # Membuat sebuah fungsi yang menerima parameter request dan ID (Disini saya menggunakan json)
-def show_json_by_id(request):
+def show_json_by_id(request, id):
     data = BarangWishlist.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
