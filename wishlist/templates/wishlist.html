@@ -20,4 +20,8 @@
 {% endfor %}
 </table>
 
+{% comment %} Potongan kode dibawah untuk menampilkan data last login dan menambahkan tombol logout {% endcomment %}
+<h5>Sesi terakhir login: {{ last_login }}</h5>
+<button><a href="{% url 'wishlist:logout' %}">Logout</a></button>
+
 {% endblock content %}
