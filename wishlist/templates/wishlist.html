@@ -1,10 +1,27 @@
 {% extends 'base.html' %}
 
-{% block content %}
-<h5>Nama: </h5>
-<p>{{nama}}</p>
+{% block meta %}
+<title>Wishlist</title>
+{% endblock meta %}
 
-<table>
+{% block content %}
+
+{% comment %} Include bootstrap from a cdn {% endcomment %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+{% comment %} Buat Navigation bar untuk nama dan button logout {% endcomment %}
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">{{nama}}</a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <button><a href="{% url 'wishlist:logout' %}">Logout</a></button>
+          </li>      
+    </div>
+</nav>
+
+<!-- <table>
     <tr>
     <th>Nama Barang</th>
     <th>Harga Barang</th>
@@ -17,11 +34,38 @@
         <th>{{barang.harga_barang}}</th>
         <th>{{barang.deskripsi}}</th>
     </tr>
-{% endfor %}
+{% endfor %} -->
 </table>
 
 {% comment %} Potongan kode dibawah untuk menampilkan data last login dan menambahkan tombol logout {% endcomment %}
-<h5>Sesi terakhir login: {{ last_login }}</h5>
-<button><a href="{% url 'wishlist:logout' %}">Logout</a></button>
+<p>Sesi terakhir login: {{ last_login }}</p>
+
+
+{% comment %} Membuat table dengan bootstrap css {% endcomment %}
+
+<table class="table" >
+  <thead>
+    <tr>
+    <th scope="col">No</th>
+    <th scope="col">Nama Barang</th>
+    <th scope="col">Harga Barang</th>
+    <th scope="col">Deskripsi</th>
+    </tr>
+ </thead>
+
+ {% for barang in list_barang %}
+  <tbody>
+    <tr>
+    <th scope="row">{{forloop.counter}}</th>
+    <td>{{barang.nama_barang}}</td>
+    <td>Rp{{barang.harga_barang}}</td>
+    <td>{{barang.deskripsi}}</td>
+    </tr>
+    {% endfor %}
+</table>   
+
+<br>
+
+
 
 {% endblock content %}
