@@ -10,6 +10,8 @@ from wishlist.views import register # Import fungsi register untuk form registra
 from wishlist.views import login_user # Import fungsi Login (Lab 3)
 from wishlist.views import logout_user # Import fungsi logout (Lab 3)
 
+from wishlist.views import show_wishlist_ajax, add_wishlist_ajax # Import fungsi untuk ajax (Lab 5)
+
 app_name = 'wishlist'
 
 urlpatterns = [
@@ -20,4 +22,6 @@ urlpatterns = [
     path('register/', register, name='register'), #lab 3 (form register)
     path('login/', login_user, name='login'), # Lab 3 (Handle Login)
     path('logout/', logout_user, name='logout'), # Lab 3 (Handle Logout)
+    path('ajax/', show_wishlist_ajax, name='show_wishlist_ajax'), # Lab 5 (Ajax)
+    path('ajax/submit/', add_wishlist_ajax, name='add_wishlist_ajax')
 ]

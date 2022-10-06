@@ -23,6 +23,9 @@ import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
+# untuk mematikan csrf protector
+from django.views.decorators.csrf import csrf_exempt
+
 
 
 
@@ -31,12 +34,34 @@ from django.urls import reverse
 def show_wishlist(request):
     data_barang_wishlist = BarangWishlist.objects.all()
     context = {
-    'list_barang': data_barang_wishlist,
-    'nama': 'M Fauzan Rizky',
-    'last_login': request.COOKIES['last_login'],
-}
+        'list_barang': data_barang_wishlist,
+        'nama': 'M Fauzan Rizky',
+        'last_login': request.COOKIES['last_login'],
+    }
     return render(request, "wishlist.html", context)
 
+@login_required(login_url='/wishlist/login/') # Agar halaman wishlist hanya dpt diakses pengguna yg terauntetikasi (login)
+def show_wishlist_ajax(request):
+    data_barang_wishlist = BarangWishlist.objects.all()
+    context = {
+        
+        'list_barang': data_barang_wishlist,
+        'nama': 'M Fauzan Rizky',
+        'last_login': request.COOKIES['last_login'],
+    }
+    return render(request, "wishlist_ajax.html", context)
+
+@login_required(login_url='/wishlist/login/')
+@csrf_exempt
+def add_wishlist_ajax(request): # Dibuat di lab5
+    if request.method == "POST":
+        nama = request.POST.get("nama")
+        harga = request.POST.get("harga")
+        deskripsi = request.POST.get("deskripsi")
+        BarangWishlist.objects.create(nama_barang=nama, harga_barang=harga, deskripsi=deskripsi)
+        return HttpResponse()
+    else:
+        return redirect("wishlist:show_wishlist")
 
 
 # Membuat sebuah fungsi yang menerima parameter request (XML)
